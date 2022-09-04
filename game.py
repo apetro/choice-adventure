@@ -1,10 +1,16 @@
 print("Escape from the Disquieting Cavern!")
 
-action_input = input("Action: ")
+def get_player_command():
+  return input("Action: ")
 
-if action_input == 'n':
-  print("You go north.")
-elif action_input == 's':
-  print("You go south.")
-else:
-  print("Error: unrecognized input.")
+def play():
+  action_input = get_player_command()
+
+  if action_input == 'n':
+    print("You go north.")
+  elif action_input == 's':
+    print("You go south.")
+  else:
+    print("Error: unrecognized input.")
+
+play()
