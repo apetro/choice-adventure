@@ -1,4 +1,4 @@
-# 002 Accepting input
+# 002 Accept input
 
 Working through chapter 3 of the book.
 
