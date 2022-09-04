@@ -5,3 +5,4 @@
 + [003 Make decisions](./003_make-decisions.md)
 + [004 Functions](./004_functions.md)
 + [005 Lists](./005_lists.md)
++ [006 Loops](./006_loops.md)
