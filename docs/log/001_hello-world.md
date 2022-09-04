@@ -14,3 +14,4 @@ print("Escape from Cave Terror!")
 
 Good advice, that. If I ever find myself in a cavern named Cave Terror, escape is a good next step.
 
+This is a customization point. I could name the cave something else, or it doesn't even have to be a cave. Let's try "the Disquieting Cavern".
