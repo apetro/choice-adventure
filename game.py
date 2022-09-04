@@ -16,8 +16,14 @@ def play():
       print("You go south.")
     elif action_input in ['i', 'I']:
       print("Inventory: ")
-      print(inventory)
+      pretty_print_list(inventory)
     else:
       print("Error: unrecognized input.")
+
+def pretty_print_list(some_list):
+  print()
+  for item in some_list:
+    print("* " + item)
+  print()
 
 play()
