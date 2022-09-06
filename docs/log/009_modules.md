@@ -2,4 +2,5 @@
 
 Organizing code into modules.
 
-Factored out items.py for the items in the game.
+Factored out items, player, util modules.
+

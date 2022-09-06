@@ -1,4 +1,4 @@
-import items
+from player import Player
 
 print("Escape from the Disquieting Cavern!")
 
@@ -7,7 +7,7 @@ def get_player_command():
 
 def play():
 
-  inventory = [items.Club(), 'Load of bread']
+  player  = Player()
 
   while True: # play until quit
     action_input = get_player_command()
@@ -18,17 +18,11 @@ def play():
       print("You go south.")
     elif action_input in ['i', 'I']:
       print("Inventory: ")
-      pretty_print_list(inventory)
+      player.print_inventory()
     elif action_input in ['q', 'Q', "quit", "exit", "bye"]:
       print("Exiting the game.")
       exit()
     else:
       print("Error: unrecognized input.")
-
-def pretty_print_list(some_list):
-  print()
-  for item in some_list:
-    print("* " + str(item))
-  print()
 
 play()
