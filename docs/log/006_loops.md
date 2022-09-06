@@ -10,3 +10,6 @@ enumerate(list)
 
 range(1, 10)
 
+Added the main game loop.
+
+Added pretty printing for inventory.
