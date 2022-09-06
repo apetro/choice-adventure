@@ -19,6 +19,9 @@ def play():
     elif action_input in ['i', 'I']:
       print("Inventory: ")
       pretty_print_list(inventory)
+    elif action_input in ['q', 'Q', "quit", "exit", "bye"]:
+      print("Exiting the game.")
+      exit()
     else:
       print("Error: unrecognized input.")
 
