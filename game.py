@@ -28,6 +28,8 @@ def play():
     elif action_input in ['i', 'I']:
       print("Inventory: ")
       player.print_inventory()
+    elif action_input in ['a', 'A', "attack", "Attack"]:
+      player.attack()
     elif action_input in ['q', 'Q', "quit", "exit", "bye"]:
       print("Exiting the game.")
       exit()
