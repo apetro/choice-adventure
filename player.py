@@ -5,7 +5,7 @@ import world
 
 class Player:
   def __init__(self):
-    self.inventory = [items.Club(), "Loaf of bread"]
+    self.inventory = [items.Club(), items.Analgesic("Crusty bread", 5)]
     self.x = 1
     self.y = 2
     self.health = 100
