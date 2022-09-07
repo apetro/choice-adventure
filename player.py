@@ -43,3 +43,22 @@ class Player:
       print("You have slain the {}.".format(monster.name))
     else:
       print("The {} is injured but still in the fight.".format(monster.name))
+  def heal(self):
+    analgesics = [item for item in self.inventory if isinstance(item, items.Analgesic) ]
+    if not analgesics:
+      print("You don't have any items that can heal you.")
+      return
+    for i, item in enumerate(analgesics, 1):
+      print("Choose a healing item to consume.")
+      print("{}. {}".format(i, item))
+      valid = False
+      while not valid:
+        choice = input("")
+        try:
+          to_consume = analgesics[int(choice) - 1]
+          self.health = min(100, self.health + to_consume.healing_value)
+          self.inventory.remove(to_consume)
+          print("Restored to {} health.".format(self.health))
+          valid = True
+        except (ValueError, IndexError):
+          print("Invalid choice. Try again.")

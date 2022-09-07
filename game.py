@@ -32,6 +32,8 @@ def play():
       player.print_inventory()
     elif action_input in ['a', 'A', "attack", "Attack"]:
       player.attack()
+    elif action_input in ['h', 'H', "heal", "Heal"]:
+      player.heal()
     elif action_input in ['q', 'Q', "quit", "exit", "bye"]:
       print("Exiting the game.")
       exit()
