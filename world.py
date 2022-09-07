@@ -5,6 +5,8 @@ class MapTile:
   def __init__(self, x, y):
     self.x = x
     self.y = y
+  def modify_player(self, player):
+    pass
 
 class StartTile(MapTile):
   def intro_text(self):
@@ -56,6 +58,10 @@ class RandomMonsterTile(MapTile):
       return "A {} awaits!".format(self.monster.name)
     else:
       return "There was once a {} here, but it has been defeated.".format(self.monster.name)
+  def modify_player(self, player):
+    if self.monster.is_alive():
+      player.health -= self.monster.damage
+      print("A {} inflicts {} damage. You have {} health remaining.".format(self.monster.name, self.monster.damage, player.health))
 
 
 

@@ -8,6 +8,7 @@ class Player:
     self.inventory = [items.Club(), "Loaf of bread"]
     self.x = 1
     self.y = 2
+    self.health = 100
   def print_inventory(self):
     util.pretty_print_list(self.inventory)
   def most_powerful_weapon(self):

@@ -15,6 +15,8 @@ def play():
     current_map_tile = world.tile_at(player.x, player.y)
     print(current_map_tile.intro_text())
 
+    current_map_tile.modify_player(player)
+
     action_input = get_player_command()
 
     if action_input in ['n', 'N', "north", "North"]:
