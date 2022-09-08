@@ -1,7 +1,10 @@
+from operator import inv
+from actions import Actions, Action
 import items
 import util
 import world
 
+debug = False
 
 class Player:
   def __init__(self):
@@ -9,6 +12,7 @@ class Player:
     self.x = 1
     self.y = 2
     self.health = 100
+    self.max_health = 100
   def print_inventory(self):
     util.pretty_print_list(self.inventory)
   def most_powerful_weapon(self):
@@ -62,3 +66,12 @@ class Player:
           valid = True
         except (ValueError, IndexError):
           print("Invalid choice. Try again.")
+  def available_player_actions(self):
+    player_actions = Actions()
+    if self.inventory:
+      inventory_action = Action(hotkey='i', name='Inventory', function=self.print_inventory)
+      player_actions.add_action(inventory_action)
+    if self.health < self.max_health:
+      heal_action = Action(hotkey='h', name='Heal', function=self.heal)
+      player_actions.add_action(heal_action)
+    return player_actions

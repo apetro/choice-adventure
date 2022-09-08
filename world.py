@@ -1,5 +1,10 @@
+from actions import Actions, Action
+import world
+
 import random
 import monsters
+
+debug = False
 
 class MapTile:
   def __init__(self, x, y):
@@ -7,6 +12,31 @@ class MapTile:
     self.y = y
   def modify_player(self, player):
     pass
+  def available_tile_actions(self, player):
+    available_actions = Actions()
+
+    north_of_here = world.tile_at(self.x, self.y - 1)
+    east_of_here = world.tile_at(self.x + 1, self.y)
+    south_of_here = world.tile_at(self.x, self.y + 1)
+    west_of_here = world.tile_at(self.x - 1, self.y)
+
+    if debug:
+      print("DEBUG: North of here is {}".format(north_of_here))
+      print("DEBUG: East of here is {}".format(east_of_here))
+      print("DEBUG: South of here is {}".format(south_of_here))
+      print("DEBUG: West of here is {}".format(west_of_here))
+
+    if north_of_here:
+      available_actions.add_action(Action(hotkey='n', name="go North", function=player.move_north))
+    if east_of_here:
+      available_actions.add_action(Action(hotkey='e', name="go East", function=player.move_east))
+    if south_of_here:
+      available_actions.add_action(Action(hotkey='s', name="go South", function=player.move_south))
+    if west_of_here:
+      available_actions.add_action(Action(hotkey='w', name="go West", function=player.move_west))
+    return available_actions
+  def __str__(self):
+    return "map tile at x={} , y={}".format(self.x, self.y)
 
 class StartTile(MapTile):
   def intro_text(self):
@@ -62,7 +92,11 @@ class RandomMonsterTile(MapTile):
     if self.monster.is_alive():
       player.health -= self.monster.damage
       print("A {} inflicts {} damage. You have {} health remaining.".format(self.monster.name, self.monster.damage, player.health))
-
+  def available_tile_actions(self, player):
+    actions = super().available_tile_actions(player)
+    if self.monster.is_alive():
+      actions.add_action(action=Action(hotkey='a', name='attack', function=player.attack))
+    return actions
 
 
 world_map = [
