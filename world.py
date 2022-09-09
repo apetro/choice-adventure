@@ -107,9 +107,14 @@ class RandomMonsterTile(MapTile):
 
 
 world_map_dsl = """
-|RM|VI|RM|
-|FO|RD|FO|
-|RD|ST|RD|
+|RM|VI|RM|FO|FO|FO|VI|FO|
+|FO|RD|FO|FO|RD|RD|RD|FO|
+|RD|ST|RD|RD|RD|FO|FO|FO|
+|VI|RD|RM|RD|FO|RM|RM|RM|
+|RD|FO|FO|FO|FO|FO|FO|FO|
+|RD|FO|FO|FO|FO|FO|FO|FO|
+|RD|RD|RD|RD|FO|FO|FO|FO|
+|FO|FO|FO|RD|FO|FO|FO|FO|
 """
 
 tile_type_dict = {
