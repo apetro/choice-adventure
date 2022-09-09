@@ -23,5 +23,6 @@ def play():
     available_actions = gather_actions(tile=current_map_tile, player=player)
     available_actions.choose_action()
     available_actions = None
+    input("Continue...")
 
 play()
