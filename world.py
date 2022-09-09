@@ -4,7 +4,7 @@ import world
 import random
 import monsters
 
-debug = True
+debug = False
 
 
 class MapTile:
