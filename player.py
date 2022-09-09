@@ -14,8 +14,10 @@ class Player:
     self.health = 100
     self.max_health = 100
     self.world_map = world_map
+    self.gold = 5
   def print_inventory(self):
     util.pretty_print_list(self.inventory)
+    print("Gold: {}".format(self.gold))
   def most_powerful_weapon(self):
     most_powerful_weapon = None
     most_powerful_weapon_damage = 0
