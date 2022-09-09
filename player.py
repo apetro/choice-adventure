@@ -7,12 +7,13 @@ import world
 debug = False
 
 class Player:
-  def __init__(self):
+  def __init__(self, world_map):
     self.inventory = [items.Club(), items.Analgesic("Crusty bread", 5)]
     self.x = 1
     self.y = 2
     self.health = 100
     self.max_health = 100
+    self.world_map = world_map
   def print_inventory(self):
     util.pretty_print_list(self.inventory)
   def most_powerful_weapon(self):
@@ -39,7 +40,7 @@ class Player:
     self.move(dx=-1, dy=0)
   def attack(self):
     best_weapon = self.most_powerful_weapon()
-    tile = world.tile_at(self.x, self.y)
+    tile = self.world_map.tile_at(self.x, self.y)
     monster = tile.monster
     print("You use {} against {}!".format(best_weapon.name, monster.name))
     monster.health -= best_weapon.damage

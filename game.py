@@ -8,11 +8,12 @@ print("Escape from the Disquieting Cavern!")
 
 def play():
 
-  player  = Player()
+  world_map = world.World(map_dsl=world.world_map_dsl, type_dict=world.tile_type_dict)
+  player  = Player(world_map)
 
   while True: # play until quit
 
-    current_map_tile = world.tile_at(player.x, player.y)
+    current_map_tile = world_map.tile_at(player.x, player.y)
     print(current_map_tile.intro_text())
     if debug:
       print("DEBUG: you are at map location x={} and y={}".format(player.x, player.y))
