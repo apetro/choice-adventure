@@ -117,6 +117,7 @@ class VillageTile(MapTile):
 
     def buy(self):
         self.trader.trade(self.player, self.trader)
+
     def sell(self):
         self.trader.trade(self.trader, self.player)
 
