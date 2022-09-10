@@ -13,7 +13,10 @@ class MapTile:
         self.x = x
         self.y = y
         self.the_world = the_world
+        self.known = False
 
+    def visit(self):
+        self.known = True
     def modify_player(self, player):
         pass
 
@@ -32,13 +35,29 @@ class MapTile:
             print("DEBUG: West of here is {}".format(west_of_here))
 
         if north_of_here:
-            available_actions.add_action(Action(hotkey='n', name="go North", function=player.move_north))
+            if north_of_here.known:
+                available_actions.add_action(
+                    Action(hotkey='n', name="go North to {}".format(north_of_here), function=player.move_north))
+            else:
+                available_actions.add_action(Action(hotkey='n', name="go North", function=player.move_north))
         if east_of_here:
-            available_actions.add_action(Action(hotkey='e', name="go East", function=player.move_east))
+            if east_of_here.known:
+                available_actions.add_action(
+                    Action(hotkey='e', name="go East to {}".format(east_of_here), function=player.move_east))
+            else:
+                available_actions.add_action(Action(hotkey='e', name="go East", function=player.move_east))
         if south_of_here:
-            available_actions.add_action(Action(hotkey='s', name="go South", function=player.move_south))
+            if south_of_here.known:
+                available_actions.add_action(
+                    Action(hotkey='s', name="go South to {}".format(south_of_here), function=player.move_south))
+            else:
+                available_actions.add_action(Action(hotkey='s', name="go South", function=player.move_south))
         if west_of_here:
-            available_actions.add_action(Action(hotkey='w', name="go West", function=player.move_west))
+            if west_of_here.known:
+                available_actions.add_action(
+                    Action(hotkey='w', name="go West to {}".format(west_of_here), function=player.move_west))
+            else:
+                available_actions.add_action(Action(hotkey='w', name="go West", function=player.move_west))
         return available_actions
 
     def __str__(self):
