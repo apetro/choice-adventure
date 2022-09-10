@@ -68,19 +68,19 @@ class Player:
         for i, item in enumerate(analgesics, 1):
             print("Choose a healing item to consume, or Q to exit.")
             print("{}. {}".format(i, item))
-            valid = False
-            while not valid:
-                choice = input("")
-                if choice in ['q', 'Q']:
-                    return
-                try:
-                    to_consume = analgesics[int(choice) - 1]
-                    self.health = min(100, self.health + to_consume.healing_value)
-                    self.inventory.remove(to_consume)
-                    print("Restored to {} health.".format(self.health))
-                    valid = True
-                except (ValueError, IndexError):
-                    print("Invalid choice. Try again.")
+        valid = False
+        while not valid:
+            choice = input("")
+            if choice in ['q', 'Q']:
+                return
+            try:
+                to_consume = analgesics[int(choice) - 1]
+                self.health = min(100, self.health + to_consume.healing_value)
+                self.inventory.remove(to_consume)
+                print("Restored to {} health.".format(self.health))
+                valid = True
+            except (ValueError, IndexError):
+                print("Invalid choice. Try again.")
 
     def available_player_actions(self):
         player_actions = Actions()
