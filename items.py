@@ -39,6 +39,6 @@ class PotionOfMinorHealing(Analgesic):
     def __init__(self):
         super.__init__("Potion of minor healing", 10, 10)
 
-class OptionOfMajorHealing(Analgesic):
+class PotionOfMajorHealing(Analgesic):
     def __init__(self):
         super.__init__("Potion of major healing", 20, 40)
