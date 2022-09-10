@@ -83,6 +83,11 @@ class RoadTile(MapTile):
     def __str__(self):
         return "dusty road"
 
+    def visit(self):
+        super().visit()
+        for adjacent_tile in self.the_world.tiles_adjacent_to(self):
+            adjacent_tile.visit()
+
 
 class VillageTile(MapTile):
 
@@ -239,6 +244,27 @@ class World:
             return self.tile_grid[y][x]
         except IndexError:
             return None
+
+    def tiles_adjacent_to(self, some_tile):
+        adjacent_tiles = []
+        if not some_tile:
+            return adjacent_tiles
+
+        tile_to_north = self.tile_at(some_tile.x, some_tile.y - 1)
+        tile_to_east = self.tile_at(some_tile.x + 1, some_tile.y)
+        tile_to_south = self.tile_at(some_tile.x, some_tile.y + 1)
+        tile_to_west = self.tile_at(some_tile.x - 1, some_tile.y)
+
+        if tile_to_north:
+            adjacent_tiles.append(tile_to_north)
+        if tile_to_east:
+            adjacent_tiles.append(tile_to_east)
+        if tile_to_south:
+            adjacent_tiles.append(tile_to_south)
+        if tile_to_west:
+            adjacent_tiles.append(tile_to_west)
+
+        return adjacent_tiles
 
     def __str__(self):
         string_representation = "world: ["
