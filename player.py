@@ -40,15 +40,19 @@ class Player:
 
     def move_north(self):
         self.move(dx=0, dy=-1)
+        print("You move north.")
 
     def move_south(self):
         self.move(dx=0, dy=1)
+        print("You move south.")
 
     def move_east(self):
         self.move(dx=1, dy=0)
+        print("You move east.")
 
     def move_west(self):
         self.move(dx=-1, dy=0)
+        print("You move west.")
 
     def attack(self):
         best_weapon = self.most_powerful_weapon()
