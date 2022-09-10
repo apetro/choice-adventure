@@ -33,12 +33,13 @@ class Analgesic:
 
 class CrustyBread(Analgesic):
     def __init__(self):
-        super.__init__("Crusty bread", 5, 5)
+        super().__init__("Crusty bread", 5, 5)
 
 class PotionOfMinorHealing(Analgesic):
     def __init__(self):
-        super.__init__("Potion of minor healing", 10, 10)
+        super().__init__("Potion of minor healing", 10, 10)
 
 class PotionOfMajorHealing(Analgesic):
     def __init__(self):
-        super.__init__("Potion of major healing", 20, 40)
+        super().__init__("Potion of major healing", 20, 40)
+
