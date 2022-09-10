@@ -35,6 +35,7 @@ class Player:
     def move(self, dx, dy):
         self.x += dx
         self.y += dy
+        self.world_map.tile_at(self.x, self.y).visit()
 
     def move_north(self):
         self.move(dx=0, dy=-1)
