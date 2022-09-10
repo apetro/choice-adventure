@@ -1,9 +1,7 @@
-from operator import inv
 from actions import Actions, Action
 from dice import D6
 import items
 import util
-import world
 
 debug = False
 
