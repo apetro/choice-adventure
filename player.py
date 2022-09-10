@@ -1,5 +1,6 @@
 from operator import inv
 from actions import Actions, Action
+from dice import D6
 import items
 import util
 import world
@@ -57,6 +58,9 @@ class Player:
         monster.health -= best_weapon.damage
         if monster.health < 1:
             print("You have slain the {}.".format(monster.name))
+            gold_looted = D6().roll()
+            self.gold = self.gold + gold_looted
+            print("You looted {} gold.".format(gold_looted))
         else:
             print("The {} is injured but still in the fight.".format(monster.name))
 
