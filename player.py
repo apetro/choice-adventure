@@ -38,20 +38,21 @@ class Player:
         self.world_map.tile_at(self.x, self.y).visit()
 
     def move_north(self):
-        self.move(dx=0, dy=-1)
         print("You move north.")
+        self.move(dx=0, dy=-1)
 
     def move_south(self):
-        self.move(dx=0, dy=1)
         print("You move south.")
+        self.move(dx=0, dy=1)
 
     def move_east(self):
-        self.move(dx=1, dy=0)
         print("You move east.")
+        self.move(dx=1, dy=0)
+
 
     def move_west(self):
-        self.move(dx=-1, dy=0)
         print("You move west.")
+        self.move(dx=-1, dy=0)
 
     def attack(self):
         best_weapon = self.most_powerful_weapon()
