@@ -70,12 +70,18 @@ class StartTile(MapTile):
         This is the starting tile.
         """
 
+    def __str__(self):
+        return "Home"
+
 
 class RoadTile(MapTile):
     def intro_text(self):
         return """
         A dusty road.
         """
+
+    def __str__(self):
+        return "dusty road"
 
 
 class VillageTile(MapTile):
@@ -115,6 +121,8 @@ class ForestTile(MapTile):
         return """
         A forest.
         """
+    def __str__(self):
+        return "forest"
 
 class RandomMonsterTile(MapTile):
     def __init__(self, x, y, the_world):
@@ -130,6 +138,9 @@ class RandomMonsterTile(MapTile):
         else:
             self.monster = monsters.Monster(name="Giant Slug", initial_health=10, damage=2)
         super().__init__(x, y, the_world)
+
+    def __str__(self):
+        return "monster"
 
     def intro_text(self):
         if self.monster.is_alive():
