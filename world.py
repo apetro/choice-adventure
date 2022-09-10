@@ -1,6 +1,7 @@
 from actions import Actions, Action
 import world
 
+import npc
 import random
 import monsters
 
@@ -59,10 +60,32 @@ class RoadTile(MapTile):
 
 
 class VillageTile(MapTile):
+
+    def __init__(self, x, y, the_world):
+        super().__init__(x, y, the_world)
+        self.trader = npc.Trader()
+
+
     def intro_text(self):
         return """"
-        A small village.
+        A small village. A trader has set up a cart with wares in the village square.
         """
+
+    def available_tile_actions(self, player):
+        self.player = player
+        buy_action = Action(hotkey='b', name="Buy from trader", function=self.buy)
+        sell_action = Action(hotkey='t', name="sell to Trader", function=self.sell)
+
+        actions = super().available_tile_actions(player)
+
+        actions.add_action(buy_action)
+        actions.add_action(sell_action)
+        return actions
+
+    def buy(self):
+        self.trader.trade(self.player, self.trader)
+    def sell(self):
+        self.trader.trade(self.trader, self.player)
 
 
 class ForestTile(MapTile):
@@ -70,7 +93,6 @@ class ForestTile(MapTile):
         return """
         A forest.
         """
-
 
 class RandomMonsterTile(MapTile):
     def __init__(self, x, y, the_world):
