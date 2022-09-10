@@ -1,6 +1,6 @@
 from actions import Actions, Action
-import world
 
+import names
 import npc
 import random
 import monsters
@@ -64,12 +64,15 @@ class VillageTile(MapTile):
     def __init__(self, x, y, the_world):
         super().__init__(x, y, the_world)
         self.trader = npc.Trader()
+        self.village_name = names.generate_village_name()
 
+    def __str__(self):
+        return self.village_name + " village"
 
     def intro_text(self):
-        return """"
-        A small village. A trader has set up a cart with wares in the village square.
-        """
+        return """
+        The small village of {}. A trader has set up a cart with wares in the village square.
+        """.format(self.village_name)
 
     def available_tile_actions(self, player):
         self.player = player
