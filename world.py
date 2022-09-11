@@ -64,6 +64,9 @@ class MapTile:
     def __str__(self):
         return "map tile at x={} , y={}".format(self.x, self.y)
 
+    def two_letter_code(self):
+        return "??"
+
 
 class StartTile(MapTile):
     def intro_text(self):
@@ -73,6 +76,9 @@ class StartTile(MapTile):
 
     def __str__(self):
         return "Home"
+
+    def two_letter_code(self):
+        return "ST"
 
 
 class RoadTile(MapTile):
@@ -88,6 +94,9 @@ class RoadTile(MapTile):
         super().visit()
         for adjacent_tile in self.the_world.tiles_adjacent_to(self):
             adjacent_tile.visit()
+
+    def two_letter_code(self):
+        return "RO"
 
 
 class VillageTile(MapTile):
@@ -122,12 +131,15 @@ class VillageTile(MapTile):
     def sell(self):
         self.trader.trade(self.trader, self.player)
 
+    def two_letter_code(self):
+        return "VI"
 
 class ForestTile(MapTile):
     def intro_text(self):
         return """
         A forest.
         """
+
     def __str__(self):
         return "forest"
 
@@ -136,7 +148,8 @@ class ForestTile(MapTile):
         actions.add_action(ForageAction(herbalism.DruidLeaf(), player))
         return actions
 
-
+    def two_letter_code(self):
+        return "FO"
 
 
 class RandomMonsterTile(MapTile):
@@ -175,6 +188,8 @@ class RandomMonsterTile(MapTile):
             actions.add_action(action=Action(name='attack', function=player.attack))
         return actions
 
+    def two_letter_code(self):
+        return "RM"
 
 world_map_dsl = """
 |RM|VI|RM|FO|FO|FO|VI|FO|
@@ -277,11 +292,14 @@ class World:
         return adjacent_tiles
 
     def __str__(self):
-        string_representation = "world: ["
+        string_representation = "world:\n"
         if self.tile_grid:
             for row in self.tile_grid:
-                string_representation = string_representation + "["
+                string_representation = string_representation + "|"
                 for tile in row:
-                    string_representation = string_representation + str(tile) + '|'
-                string_representation = string_representation + "]"
+                    if tile:
+                        string_representation = string_representation + tile.two_letter_code() + '|'
+                    else:
+                        string_representation = string_representation + "  " + '|'
+                string_representation = string_representation + "\n"
         return string_representation
