@@ -130,19 +130,20 @@ class ForestTile(MapTile):
     def __str__(self):
         return "forest"
 
+
 class RandomMonsterTile(MapTile):
     def __init__(self, x, y, the_world):
         r = random.random()
         if r < 0.05:
-            self.monster = monsters.Monster(name="Gargoyle", initial_health=100, damage=10)
+            self.monster = monsters.Gargoyle()
         elif r < 0.10:
-            self.monster = monsters.Monster(name="Giant Spider", initial_health=50, damage=5)
+            self.monster = monsters.GiantSpider()
         elif r < 0.20:
-            self.monster = monsters.Monster(name="Large Spider", initial_health=20, damage=4)
+            self.monster = monsters.LargeSpider()
         elif r < 0.40:
-            self.monster = monsters.Monster(name="Sizeable Spider", initial_health=10, damage=2)
+            self.monster = monsters.SizeableSpider()
         else:
-            self.monster = monsters.Monster(name="Giant Slug", initial_health=10, damage=2)
+            self.monster = monsters.GiantSlug()
         super().__init__(x, y, the_world)
 
     def __str__(self):
