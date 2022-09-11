@@ -36,7 +36,7 @@ class Actions:
             action_input = input("Action: ")
             chosen_action = self.actions.get(action_input)
             if chosen_action:
-                chosen_action.function()
+                chosen_action.perform()
             else:
                 print("Error: {} is not the hotkey of an available action.".format(action_input))
 
@@ -57,6 +57,8 @@ class Action:
     def __str__(self):
         return self.hotkey
 
+    def perform(self):
+        self.function()
 
 def gather_actions(tile, player):
 
