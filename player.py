@@ -94,10 +94,10 @@ class Player:
     def available_player_actions(self):
         player_actions = Actions()
         if self.inventory:
-            inventory_action = Action(hotkey='i', name='Inventory', function=self.print_inventory)
+            inventory_action = Action(name='Inventory', function=self.print_inventory)
             player_actions.add_action(inventory_action)
         if self.health < self.max_health:
-            heal_action = Action(hotkey='h', name='Heal', function=self.heal)
+            heal_action = Action(name='Heal', function=self.heal)
             player_actions.add_action(heal_action)
         return player_actions
 

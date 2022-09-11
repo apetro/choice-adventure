@@ -7,25 +7,22 @@ class Actions:
 
     def __init__(self):
 
-        self.actions = OrderedDict()
+        self.actions = []
 
     def add_action(self, action):
-        self.actions[action.hotkey.lower()] = action
+        self.actions.append(action)
         if debug:
              print("DEBUG: added action {}".format(action))
 
 
     def add_actions(self, actions):
-        for action in actions.actions.values():
+        for action in actions.actions:
             self.add_action(action)
-
-    def action_for_key(self, hotkey):
-        return self.actions.get(hotkey.lower())
 
     def print_action_menu(self):
         print("Available actions:")
-        for action in self.actions.values():
-            action.print_action()
+        for i, action in enumerate(self.actions, 1):
+            print("{}: {}".format(i, action.name))
         print()
 
     def choose_action(self):
@@ -34,10 +31,14 @@ class Actions:
         while not chosen_action:
             self.print_action_menu()
             action_input = input("Action: ")
-            chosen_action = self.actions.get(action_input)
-            if chosen_action:
-                chosen_action.perform()
-            else:
+            try:
+                action_int = int(action_input)
+                chosen_action = self.actions[action_int - 1]
+                if chosen_action:
+                    chosen_action.perform()
+                else:
+                    print("Error: {} is not the hotkey of an available action.".format(action_input))
+            except ValueError:
                 print("Error: {} is not the hotkey of an available action.".format(action_input))
 
     def __str__(self):
@@ -48,14 +49,12 @@ class Actions:
 
 
 class Action:
-    def __init__(self, hotkey, name, function):
-        self.hotkey = hotkey
+    def __init__(self, name, function):
         self.name = name
         self.function = function
-    def print_action(self):
-        print(" {}: {}".format(self.hotkey, self.name))
+
     def __str__(self):
-        return self.hotkey
+        return self.name
 
     def perform(self):
         self.function()
@@ -63,7 +62,7 @@ class Action:
 
 class ForageAction(Action):
     def __init__(self, item, player):
-        super().__init__('f', "Forage", None)
+        super().__init__("Forage", None)
         self.effect = player.build_gain_inventory_effect(item)
         self.item_name = str(item)
 
@@ -88,6 +87,6 @@ def gather_actions(tile, player):
     available_actions.add_actions(player_actions)
     available_actions.add_actions(location_actions)
 
-    available_actions.add_action(Action('q', "Quit", exit))
+    available_actions.add_action(Action("Quit", exit))
 
     return available_actions

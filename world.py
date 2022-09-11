@@ -38,27 +38,27 @@ class MapTile:
         if north_of_here:
             if north_of_here.known:
                 available_actions.add_action(
-                    Action(hotkey='n', name="go North to {}".format(north_of_here), function=player.move_north))
+                    Action(name="go North to {}".format(north_of_here), function=player.move_north))
             else:
-                available_actions.add_action(Action(hotkey='n', name="go North", function=player.move_north))
+                available_actions.add_action(Action(name="go North", function=player.move_north))
         if east_of_here:
             if east_of_here.known:
                 available_actions.add_action(
-                    Action(hotkey='e', name="go East to {}".format(east_of_here), function=player.move_east))
+                    Action(name="go East to {}".format(east_of_here), function=player.move_east))
             else:
-                available_actions.add_action(Action(hotkey='e', name="go East", function=player.move_east))
+                available_actions.add_action(Action(name="go East", function=player.move_east))
         if south_of_here:
             if south_of_here.known:
                 available_actions.add_action(
-                    Action(hotkey='s', name="go South to {}".format(south_of_here), function=player.move_south))
+                    Action(name="go South to {}".format(south_of_here), function=player.move_south))
             else:
-                available_actions.add_action(Action(hotkey='s', name="go South", function=player.move_south))
+                available_actions.add_action(Action(name="go South", function=player.move_south))
         if west_of_here:
             if west_of_here.known:
                 available_actions.add_action(
-                    Action(hotkey='w', name="go West to {}".format(west_of_here), function=player.move_west))
+                    Action(name="go West to {}".format(west_of_here), function=player.move_west))
             else:
-                available_actions.add_action(Action(hotkey='w', name="go West", function=player.move_west))
+                available_actions.add_action(Action(name="go West", function=player.move_west))
         return available_actions
 
     def __str__(self):
@@ -107,8 +107,8 @@ class VillageTile(MapTile):
 
     def available_tile_actions(self, player):
         self.player = player
-        buy_action = Action(hotkey='b', name="Buy from trader", function=self.buy)
-        sell_action = Action(hotkey='t', name="sell to Trader", function=self.sell)
+        buy_action = Action(name="Buy from trader", function=self.buy)
+        sell_action = Action(name="sell to Trader", function=self.sell)
 
         actions = super().available_tile_actions(player)
 
@@ -172,7 +172,7 @@ class RandomMonsterTile(MapTile):
     def available_tile_actions(self, player):
         actions = super().available_tile_actions(player)
         if self.monster.is_alive():
-            actions.add_action(action=Action(hotkey='a', name='attack', function=player.attack))
+            actions.add_action(action=Action(name='attack', function=player.attack))
         return actions
 
 
