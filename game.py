@@ -8,7 +8,8 @@ print("Escape from the Disquieting Cavern!")
 
 def play():
 
-  world_map = world.World(map_dsl=world.world_map_dsl, type_dict=world.tile_type_dict)
+  # world_map = world.DslWorld(map_dsl=world.world_map_dsl, type_dict=world.tile_type_dict)
+  world_map = world.RandomWorld(20)
   player  = Player(world_map)
 
   while True: # play until quit

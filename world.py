@@ -6,7 +6,7 @@ import npc
 import random
 import monsters
 
-debug = False
+debug = True
 
 
 class MapTile:
@@ -255,11 +255,6 @@ def validate_dsl(dsl):
 
 class World:
 
-    def __init__(self, map_dsl, type_dict):
-        self.tile_grid = parse_world_dsl(dsl=map_dsl, type_dict=type_dict, the_world=self)
-        if debug:
-            print("Inited world as {}".format(self.__str__()))
-
     def tile_at(self, x, y):
         if debug:
             print("DEBUG: tile_at({},{})".format(x, y))
@@ -303,3 +298,59 @@ class World:
                         string_representation = string_representation + "  " + '|'
                 string_representation = string_representation + "\n"
         return string_representation
+
+class RandomWorld(World):
+    def __init__(self, size=10):
+        self.tile_grid = []
+
+        for y in range(0, size):
+            row = []
+            for x in range(0, size):
+                row.append(None)
+            self.tile_grid.append(row)
+
+        print(self.__str__())
+
+
+        # choose coordinates for the first village
+
+        village_1_x = random.randint(0, round(size / 3))
+        village_1_y = random.randint(0, size - 1)
+        print("Placing first village at {},{}".format(village_1_x, village_1_y))
+
+        self.tile_grid[village_1_y][village_1_x] = VillageTile(village_1_x, village_1_y, self)
+
+        print(self.__str__())
+
+        # the second village will be due west of the first
+
+        village_2_x = random.randint(round(size/2), size - 1)
+
+        print("Placing second village at {},{}.".format(village_2_x, village_1_y))
+
+        self.tile_grid[village_1_y][village_2_x] = VillageTile(village_2_x, village_1_y, self)
+
+        print(self.__str__())
+
+        # connect the two with road
+        for x in range(village_1_x + 1, village_2_x):
+            self.tile_grid[village_1_y][x] = RoadTile(x, village_1_y, self)
+
+        print(self.__str__())
+        # fill in the rest with forest
+
+        for y in range(0, size):
+            for x in range(0, size):
+                if not self.tile_at(x, y):
+                    self.tile_grid[y][x] = ForestTile(x, y, self)
+
+        print(self.__str__())
+
+class DsLWorld(World):
+
+    def __init__(self, map_dsl, type_dict):
+        self.tile_grid = parse_world_dsl(dsl=map_dsl, type_dict=type_dict, the_world=self)
+        if debug:
+            print("Inited world as {}".format(self.__str__()))
+
+
