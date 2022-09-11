@@ -1,4 +1,5 @@
-from actions import Actions, Action
+import herbalism
+from actions import Actions, Action, ForageAction
 
 import names
 import npc
@@ -129,6 +130,13 @@ class ForestTile(MapTile):
         """
     def __str__(self):
         return "forest"
+
+    def available_tile_actions(self, player):
+        actions = super().available_tile_actions(player)
+        actions.add_action(ForageAction(herbalism.DruidLeaf(), player))
+        return actions
+
+
 
 
 class RandomMonsterTile(MapTile):

@@ -60,6 +60,18 @@ class Action:
     def perform(self):
         self.function()
 
+
+class ForageAction(Action):
+    def __init__(self, item, player):
+        super().__init__('f', "Forage", None)
+        self.effect = player.build_gain_inventory_effect(item)
+        self.item_name = str(item)
+
+    def perform(self):
+        print("You forage and, luckily, find {}.".format(self.item_name))
+        self.effect.apply()
+
+
 def gather_actions(tile, player):
 
     player_actions = player.available_player_actions()
