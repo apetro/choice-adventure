@@ -1,3 +1,4 @@
+import effects
 from actions import Actions, Action
 from dice import D6
 import items
@@ -99,3 +100,17 @@ class Player:
             heal_action = Action(hotkey='h', name='Heal', function=self.heal)
             player_actions.add_action(heal_action)
         return player_actions
+
+    def build_gain_inventory_effect(self, item):
+        return GainInventoryEffect(item, self)
+
+
+class GainInventoryEffect(effects.Effect):
+    """The effect of adding to the player's inventory."""
+
+    def __init__(self, additional_item, player):
+        self.additional_item = additional_item
+        self.player = player
+
+    def apply(self):
+        self.player.inventory.append(self.additional_item)
