@@ -314,27 +314,19 @@ class RandomWorld(World):
 
         # choose coordinates for the first village
 
-        village_1_x = random.randint(0, round(size / 3))
-        village_1_y = random.randint(0, size - 1)
-        print("Placing first village at {},{}".format(village_1_x, village_1_y))
+        random.choice
 
-        self.tile_grid[village_1_y][village_1_x] = VillageTile(village_1_x, village_1_y, self)
+        village_y_s = []
+        for i in range(round(size / 5)):
+            candidate_y = random.choice(range(0, round((size - 1) / 2)))
+            if candidate_y not in village_y_s \
+                    and (candidate_y - 1) not in village_y_s \
+                    and (candidate_y + 1) not in village_y_s:
 
-        print(self.__str__())
+                village_y_s.append(candidate_y)
 
-        # the second village will be due west of the first
-
-        village_2_x = random.randint(round(size/2), size - 1)
-
-        print("Placing second village at {},{}.".format(village_2_x, village_1_y))
-
-        self.tile_grid[village_1_y][village_2_x] = VillageTile(village_2_x, village_1_y, self)
-
-        print(self.__str__())
-
-        # connect the two with road
-        for x in range(village_1_x + 1, village_2_x):
-            self.tile_grid[village_1_y][x] = RoadTile(x, village_1_y, self)
+        for y in village_y_s:
+            self.add_village_at(y, size)
 
         print(self.__str__())
         # fill in the rest with forest
@@ -345,6 +337,29 @@ class RandomWorld(World):
                     self.tile_grid[y][x] = ForestTile(x, y, self)
 
         print(self.__str__())
+
+    def add_village_at(self, y, size):
+        village_1_x = random.randint(0, round(size / 3))
+        print("Placing first village at {},{}".format(village_1_x, y))
+
+        self.tile_grid[y][village_1_x] = VillageTile(village_1_x, y, self)
+
+        print(self.__str__())
+
+        # the second village will be due west of the first
+
+        village_2_x = random.randint(round(size / 2), size - 1)
+
+        print("Placing second village at {},{}.".format(village_2_x, y))
+
+        self.tile_grid[y][village_2_x] = VillageTile(village_2_x, y, self)
+
+        print(self.__str__())
+
+        # connect the two with road in a straight line
+        for x in range(village_1_x + 1, village_2_x):
+            self.tile_grid[y][x] = RoadTile(x, y, self)
+
 
 class DsLWorld(World):
 
