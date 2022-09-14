@@ -317,7 +317,7 @@ class RandomWorld(World):
         random.choice
 
         village_y_s = []
-        for i in range(round(size / 5)):
+        for i in range(round(size / 4)):
             candidate_y = random.choice(range(0, round((size - 1) / 2)))
             if candidate_y not in village_y_s \
                     and (candidate_y - 1) not in village_y_s \
