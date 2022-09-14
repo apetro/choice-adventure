@@ -326,10 +326,18 @@ class RandomWorld(World):
                 village_y_s.append(candidate_y)
 
         for y in village_y_s:
-            self.add_village_at(y, size)
+            self.add_village_pair(y, size)
 
+        print("After adding villages.")
         print(self.__str__())
-        # fill in the rest with forest
+
+        print("Drawing roads northward from villages.")
+        self.draw_roads_north_south_from_villages(size)
+
+        print("After drawing northward roads.")
+        print(self.__str__())
+
+        print("Filling in the rest with forest.")
 
         for y in range(0, size):
             for x in range(0, size):
@@ -338,7 +346,7 @@ class RandomWorld(World):
 
         print(self.__str__())
 
-    def add_village_at(self, y, size):
+    def add_village_pair(self, y, size):
         village_1_x = random.randint(0, round(size / 3))
         print("Placing first village at {},{}".format(village_1_x, y))
 
@@ -356,9 +364,94 @@ class RandomWorld(World):
 
         print(self.__str__())
 
-        # connect the two with road in a straight line
-        for x in range(village_1_x + 1, village_2_x):
+        print("The distance between the villages is {}.".format(village_2_x - village_1_x))
+
+        if y == 0 or y == size - 1 or village_2_x - village_1_x < 12 or  random.random() < 0.1:
+            # connect the two with road in a straight line
+            print("Adding straight road between the villages")
+
+            self.connect_east_west_with_road(village_1_x + 1, village_2_x, y)
+            print(self.__str__())
+        else:
+            # connect with a road that displaces one tile north or south
+            print("Connecting the villages with a road with a wiggle.")
+            displace_x_1 = random.choice(range(village_1_x + 2, round(village_2_x - village_1_x / 3) + village_1_x))
+            displace_x_2 = random.choice(
+                range(village_1_x + round(2 * (village_2_x - village_1_x) /  3), village_2_x - 2))
+
+            self.connect_east_west_with_road(village_1_x + 1, displace_x_1, y)
+
+            y_mod = random.choice([-1, 1])
+
+            self.connect_east_west_with_road(displace_x_1 - 1, displace_x_2, y + y_mod)
+
+            self.connect_east_west_with_road(displace_x_2 - 1, village_2_x, y)
+
+
+            print(self.__str__())
+
+    def add_road_if_empty(self, x, y):
+        existing_tile = self.tile_at(x, y)
+        if existing_tile:
+            print("Did not add road at {}, {} because tile already there: {}.".format(x, y, existing_tile))
+        else:
             self.tile_grid[y][x] = RoadTile(x, y, self)
+
+    def draw_roads_north_south_from_villages(self, size):
+        for x in range(0, size):
+            for y in range(1, size): # No need to draw roads north from villages in top row
+                tile_there = self.tile_at(x, y)
+                if tile_there and tile_there.two_letter_code() == "VI":
+                    print("Drawing road north from {}, {}.".format(x, y))
+                    self.draw_road_north_from(x, y - 1)
+                    print(self.__str__())
+
+    def draw_road_north_from(self, start_x, start_y):
+        x = start_x
+        for y in range(start_y, 0, -1):
+            tile_to_east = self.tile_at(x + 1, y)
+            tile_to_northeast = self.tile_at(x + 1, y - 1)
+            tile_to_southeast = self.tile_at(x + 1, y + 1)
+            tile_to_west = self.tile_at(x - 1, y)
+            tile_to_northwest = self.tile_at(x - 1, y -1)
+            tile_to_southwest = self.tile_at(x - 1, y + 1)
+            if tile_to_east and tile_to_east.two_letter_code() == "RO" \
+                    and tile_to_northeast and tile_to_northeast.two_letter_code() == "RO" \
+                    and tile_to_southeast and tile_to_southeast.two_letter_code() == "RO":
+                print("Stopping northward road at {}. {} because detected adjacent to parallel road to east.".format(x, y))
+                return # do not draw roads parallel to immediately adjacent roads
+            if tile_to_west and tile_to_west.two_letter_code() == "RO" \
+                    and tile_to_northwest and tile_to_northwest.two_letter_code() == "RO" \
+                    and tile_to_southwest and tile_to_southwest.two_letter_code() == "RO":
+                print("Stopping northward road at {}, {} because detected adjacent to parallel road to west.".format(x, y))
+                return  # do not draw roads parallel to immediately adjacent roads
+            if random.random() < (start_y - y) / 100: # roads more likely to end prematurely the longer they go
+                return
+            self.add_road_if_empty(x, y)
+
+    def connect_east_west_with_road(self, x1, x2, y):
+        for x in range(x1, x2):
+            tile_to_north = self.tile_at(x, y - 1)
+            tile_to_northeast = self.tile_at(x + 1, y - 1)
+            tile_to_northwest = self.tile_at(x - 1, y - 1)
+            tile_to_south = self.tile_at(x, y + 1)
+            tile_to_southeast = self.tile_at(x + 1, y + 1)
+            tile_to_southwest = self.tile_at(x - 1, y + 1)
+
+            if tile_to_north and tile_to_north.two_letter_code() == "RO" \
+                    and tile_to_northeast and tile_to_northeast.two_letter_code() == "RO" \
+                    and tile_to_northwest and tile_to_northwest.two_letter_code() == "RO":
+                print("Ended eastward road at {}, {} because detected adjacent to parallel east-west road.".format(x, y))
+                return
+            if tile_to_south and tile_to_south.two_letter_code() == "RO" \
+                and tile_to_southeast and tile_to_southeast.two_letter_code() == "RO" \
+                and tile_to_southwest and tile_to_southwest.two_letter_code() == "RO":
+                print(
+                    "Ended eastward road at {}, {} because detected adjacent to parallel east-west road.".format(x, y))
+                return
+
+            self.add_road_if_empty(x, y)
+
 
 
 class DsLWorld(World):
