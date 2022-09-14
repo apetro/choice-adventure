@@ -50,7 +50,6 @@ class Player:
         print("You move east.")
         self.move(dx=1, dy=0)
 
-
     def move_west(self):
         print("You move west.")
         self.move(dx=-1, dy=0)
