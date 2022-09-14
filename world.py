@@ -6,7 +6,7 @@ import npc
 import random
 import monsters
 
-debug = True
+debug = False
 
 
 class MapTile:
